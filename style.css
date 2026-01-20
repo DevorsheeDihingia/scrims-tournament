@@ -1,0 +1,78 @@
+body {
+    background-color: #121212; /* Dark background */
+    color: white;              /* White text */
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 100px;
+}
+
+button {
+    background-color: #ff4757;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    
+    /* New lines for mobile */
+    width: 80%;           /* Takes up 80% of the screen width on phones */
+    max-width: 300px;     /* But stops getting too big on PC */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #1e1e1e;
+    align-items: center;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 24px;
+    color: #ff4757;
+}
+
+.container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Forces items to stack top-to-bottom */
+    align-items: center;    /* Centers them in the middle */
+    gap: 20px;              /* Adds space between the cards */
+}
+.match-card {
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;           /* Full width on phone */
+    max-width: 400px;      /* Stops getting too wide on PC */
+    border: 1px solid #333;
+    text-align: left;      /* Text looks better aligned left */
+    margin-top: 20px;
+}
+
+.small-btn {
+    width: 100%;
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 10px;
+}
+
+#search-box {
+    padding: 10px;
+    width: 80%;
+    max-width: 400px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.game-img {
+    width: 100%;            /* Force image to fit the card width */
+    height: 150px;          /* Set a fixed height */
+    object-fit: cover;      /* Crop the image neatly (don't squish it) */
+    border-radius: 5px;     /* Round the corners slightly */
+    margin-bottom: 10px;    /* Add space between image and text */
+}

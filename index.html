@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scrims Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav>
+    <div class="logo">SCRIMS</div>
+    <div class="menu">Menu</div>
+  </nav>
+
+  <input type="text" id="search-box" placeholder="Search games..." onkeyup="filterGames()">
+
+
+  <h1>Welcome to the Esports Arena</h1>
+  <p>Building the future for gamers.</p>
+  <button onclick="joinMatch()">Join Match</button>
+
+  <div class="container" id="match-list">
+  </div>
+
+  <button onclick="resetSystem()" style="background-color: #333; margin-top: 50px; margin-bottom: 50px;">⚠️ RESET SYSTEM</button>
+  <script src="script.js"></script>
+</body>
+</html>
