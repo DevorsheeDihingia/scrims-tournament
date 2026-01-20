@@ -68,6 +68,11 @@ function renderMatches(data) {
                 <h3>${match.game}</h3>
                 <p>Time: ${match.time}</p>
                 <p>Prize: ${match.prize}</p>
+                
+                <p style="color: #bbb; font-size: 14px; margin-bottom: 10px;">
+                    👥 <span id="count-${match.id}">Loading...</span> Registered
+                </p>
+
                 <button class="small-btn" style="${buttonStyle}" onclick="register(this, ${match.id})">${buttonText}</button>
             </div>
         `;
@@ -127,3 +132,29 @@ function resetSystem() {
     // 2. Refresh the page automatically
     location.reload();
 }
+
+// This function asks Google Sheets for the numbers
+function updatePlayerCounts() {
+    fetch(API_URL)
+    .then(response => response.json()) // Convert the answer to JSON
+    .then(data => {
+        // 'data' looks like: { "BGMI - Erangel": 5, "Valorant": 2 }
+        
+        matches.forEach(match => {
+            // Find the <span> we created for this game
+            const countSpan = document.getElementById("count-" + match.id);
+            
+            // Get the count from the data (or 0 if nobody joined yet)
+            const count = data[match.game] || 0;
+            
+            // Update the text
+            if (countSpan) {
+                countSpan.innerText = count;
+            }
+        });
+    })
+    .catch(error => console.error("Error fetching counts:", error));
+}
+
+// Run this immediately when the page loads
+updatePlayerCounts();
