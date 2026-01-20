@@ -5,36 +5,26 @@ const matches = [
         id: 1, 
         game: "BGMI - Erangel", 
         time: "8:00 PM", 
-        prize: "₹100",
-        image: "https://placehold.co/600x400/orange/white?text=BGMI"
+        prize: "₹100", 
+        image: "https://placehold.co/600x400/orange/white?text=BGMI",
+        maxPlayers: 100 // Room for 100
     },
     { 
         id: 2, 
         game: "Strinova - 5v5", 
         time: "9:30 PM", 
-        prize: "₹500",
-        image: "https://placehold.co/600x400/purple/white?text=Strinova"
+        prize: "₹500", 
+        image: "https://placehold.co/600x400/purple/white?text=Strinova",
+        maxPlayers: 2 // Set LOW to test "Sold Out"
     },
+    // ... add maxPlayers to the others too ...
     { 
         id: 3, 
         game: "Valorant - TDM", 
         time: "10:00 PM", 
-        prize: "₹200",
-        image: "https://placehold.co/600x400/red/white?text=Valorant"
-    },
-    { 
-        id: 4, 
-        game: "Minecraft - SMP", 
-        time: "11:00 PM", 
-        prize: "₹0",
-        image: "https://placehold.co/600x400/green/white?text=Minecraft"
-    },
-    { 
-        id: 5, 
-        game: "Free Fire - 1v4", 
-        time: "11:00 PM", 
-        prize: "₹0",
-        image: "https://placehold.co/600x400/yellow/black?text=Free+Fire"
+        prize: "₹200", 
+        image: "https://placehold.co/600x400/red/white?text=Valorant",
+        maxPlayers: 10 
     }
 ];
 
@@ -73,7 +63,13 @@ function renderMatches(data) {
                     👥 <span id="count-${match.id}">Loading...</span> Registered
                 </p>
 
-                <button class="small-btn" style="${buttonStyle}" onclick="register(this, ${match.id})">${buttonText}</button>
+                <button
+                    id="btn-${match.id}"
+                    class="small-btn"
+                    style="${buttonStyle}"
+                    onclick="register(this, ${match.id})">
+                    ${buttonText}
+                </button>
             </div>
         `;
         container.innerHTML += cardHTML;
@@ -158,3 +154,34 @@ function updatePlayerCounts() {
 
 // Run this immediately when the page loads
 updatePlayerCounts();
+
+function updatePlayerCounts() {
+    fetch(API_URL)
+    .then(response => response.json())
+    .then(data => {
+        matches.forEach(match => {
+            // 1. Get the current count
+            const count = data[match.game] || 0;
+
+            // 2. Update the text to show "5 / 10"
+            const countSpan = document.getElementById("count-" + match.id);
+            if (countSpan) {
+                countSpan.innerText = count + " / " + match.maxPlayers;
+            }
+
+            // 3. THE SOLD OUT CHECK
+            const btn = document.getElementById("btn-" + match.id);
+
+            // If the room is full...
+            if (count >= match.maxPlayers) {
+                if (btn) {
+                    btn.innerText = "SOLD OUT";
+                    btn.style.backgroundColor = "#555"; // Grey color
+                    btn.style.coursor = "not-allowed";
+                    btn.disabled = true; // Click worn't work
+                }
+            }
+        });
+    })
+    .catch(error => console.error("Error", error));
+}
