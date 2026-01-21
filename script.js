@@ -7,7 +7,7 @@ const matches = [
         time: "8:00 PM", 
         prize: "₹2880", 
         image: "https://placehold.co/600x400/orange/white?text=BGMI",
-        maxPlayers: 64 // Room for 100
+        maxPlayers: 64 // Room for 64
     },
     { 
         id: 2, 
@@ -182,3 +182,24 @@ function updatePlayerCounts() {
 
 // Run this immediately when the page loads
 updatePlayerCounts();
+
+// --- SMART NAVBAR LOGIC ---
+let lastScrollTop = 0;
+const navbar = document.querySelector("nav");
+
+window.addEventListener("scroll", function() {
+    // 1. Get current scroll position
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // 2. Compare with last position
+    if (scrollTop > lastScrollTop) {
+        // SCROLLING DOWN -> Hide Navbar (Move it up out of view)
+        navbar.style.top = "-100px"; 
+    } else {
+        // SCROLLING UP -> Show Navbar (Bring it back to 0)
+        navbar.style.top = "0";
+    }
+    
+    // 3. Update the "last" position for the next check
+    lastScrollTop = scrollTop;
+});

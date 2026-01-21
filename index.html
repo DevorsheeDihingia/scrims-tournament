@@ -14,15 +14,21 @@
     <div class="menu">Menu</div>
   </nav>
 
-  <input type="text" id="search-box" placeholder="Search games..." onkeyup="filterGames()">
+  <header class="hero">
+    <div class="hero-content">
+        <h1>UNLEASH YOUR <span style="color: #ff4757;">POTENTIAL</span></h1>
+        <p>Compete in daily scrims. Win cash prizes. Prove you are the best.</p>
+        <button class="cta-btn" onclick="document.getElementById('match-list').scrollIntoView({behavior: 'smooth'})">
+            BROWSE TOURNAMENTS
+        </button>
+    </div>
+  </header>
 
-
-  <h1>Welcome to the Esports Arena</h1>
-  <p>Building the future for gamers.</p>
-  <button onclick="joinMatch()">Join Match</button>
-
-  <div class="container" id="match-list">
+  <div class="search-container">
+      <input type="text" id="search-box" placeholder="🔍 Find your game..." onkeyup="filterGames()">
   </div>
+
+  <div class="container" id="match-list"></div>
 
   <button onclick="resetSystem()" style="background-color: #333; margin-top: 50px; margin-bottom: 50px;">⚠️ RESET SYSTEM</button>
   <script src="script.js"></script>
