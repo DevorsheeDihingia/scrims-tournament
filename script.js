@@ -5,24 +5,24 @@ const matches = [
         id: 1, 
         game: "BGMI - Erangel", 
         time: "8:00 PM", 
-        prize: "₹100", 
+        prize: "₹2880", 
         image: "https://placehold.co/600x400/orange/white?text=BGMI",
-        maxPlayers: 100 // Room for 100
+        maxPlayers: 64 // Room for 100
     },
     { 
         id: 2, 
         game: "Strinova - 5v5", 
         time: "9:30 PM", 
-        prize: "₹500", 
+        prize: "₹5000", 
         image: "https://placehold.co/600x400/purple/white?text=Strinova",
-        maxPlayers: 2 // Set LOW to test "Sold Out"
+        maxPlayers: 10 // Set LOW to test "Sold Out"
     },
     // ... add maxPlayers to the others too ...
     { 
         id: 3, 
         game: "Valorant - TDM", 
         time: "10:00 PM", 
-        prize: "₹200", 
+        prize: "₹4600", 
         image: "https://placehold.co/600x400/red/white?text=Valorant",
         maxPlayers: 10 
     }
