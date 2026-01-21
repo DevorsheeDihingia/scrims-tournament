@@ -63,12 +63,13 @@ function renderMatches(data) {
                     👥 <span id="count-${match.id}">Loading...</span> Registered
                 </p>
 
-                <button
-                    id="btn-${match.id}"
-                    class="small-btn"
-                    style="${buttonStyle}"
+                <button 
+                    id="btn-${match.id}" 
+                    class="small-btn" 
+                    style="background-color: #555; cursor: wait;" 
+                    disabled 
                     onclick="register(this, ${match.id})">
-                    ${buttonText}
+                    Checking...
                 </button>
             </div>
         `;
@@ -132,56 +133,52 @@ function resetSystem() {
 // This function asks Google Sheets for the numbers
 function updatePlayerCounts() {
     fetch(API_URL)
-    .then(response => response.json()) // Convert the answer to JSON
-    .then(data => {
-        // 'data' looks like: { "BGMI - Erangel": 5, "Valorant": 2 }
-        
-        matches.forEach(match => {
-            // Find the <span> we created for this game
-            const countSpan = document.getElementById("count-" + match.id);
-            
-            // Get the count from the data (or 0 if nobody joined yet)
-            const count = data[match.game] || 0;
-            
-            // Update the text
-            if (countSpan) {
-                countSpan.innerText = count;
-            }
-        });
-    })
-    .catch(error => console.error("Error fetching counts:", error));
-}
-
-// Run this immediately when the page loads
-updatePlayerCounts();
-
-function updatePlayerCounts() {
-    fetch(API_URL)
     .then(response => response.json())
     .then(data => {
         matches.forEach(match => {
-            // 1. Get the current count
-            const count = data[match.game] || 0;
-
-            // 2. Update the text to show "5 / 10"
+            // 1. Find the elements
+            const btn = document.getElementById("btn-" + match.id);
             const countSpan = document.getElementById("count-" + match.id);
+            
+            // 2. Update the Text (e.g. "2 / 100")
+            const count = data[match.game] || 0;
             if (countSpan) {
                 countSpan.innerText = count + " / " + match.maxPlayers;
             }
 
-            // 3. THE SOLD OUT CHECK
-            const btn = document.getElementById("btn-" + match.id);
+            // 3. DECIDE BUTTON STATUS
+            if (btn) {
+                // Check if I already joined locally
+                const isJoined = localStorage.getItem("joined-" + match.id) === "yes";
 
-            // If the room is full...
-            if (count >= match.maxPlayers) {
-                if (btn) {
+                if (isJoined) {
+                    // CASE A: Already Joined -> Green & Disabled
+                    btn.innerText = "Joined";
+                    btn.style.backgroundColor = "#2ed573"; 
+                    btn.disabled = true;
+                    btn.style.cursor = "default";
+
+                } else if (count >= match.maxPlayers) {
+                    // CASE B: Sold Out -> Grey & Disabled
                     btn.innerText = "SOLD OUT";
-                    btn.style.backgroundColor = "#555"; // Grey color
-                    btn.style.coursor = "not-allowed";
-                    btn.disabled = true; // Click worn't work
+                    btn.style.backgroundColor = "#555"; 
+                    btn.disabled = true;
+                    btn.style.cursor = "not-allowed";
+
+                } else {
+                    // CASE C: Space Available -> Red & Active (THE MISSING PIECE)
+                    btn.innerText = "Register";
+                    btn.style.backgroundColor = "#ff4757"; 
+                    btn.disabled = false; // Enable the click!
+                    btn.style.cursor = "pointer";
                 }
             }
         });
     })
-    .catch(error => console.error("Error", error));
+    .catch(error => {
+        console.error("Error:", error);
+    });
 }
+
+// Run this immediately when the page loads
+updatePlayerCounts();
