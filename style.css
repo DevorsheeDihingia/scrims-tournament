@@ -208,3 +208,81 @@ body {
     margin-top: 0; /* Reset margin since we have a hero now */
     padding-top: 0;
 }
+
+/* =========================================
+   📱 MOBILE-ONLY STYLES (Max Width: 768px)
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* 1. HERO: Adjust text size */
+    .hero h1 { font-size: 2rem; }
+    .hero { height: 60vh; margin-top: 0; }
+    
+    /* 2. LAYOUT: Switch to List View */
+    .container {
+        display: block; 
+        padding: 10px;
+    }
+
+    /* 3. CARD: Flex Row (Side-by-Side) */
+    .match-card {
+        display: flex;
+        flex-direction: row; /* Force horizontal row */
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: none;
+        margin-bottom: 15px;
+        padding: 12px;
+        gap: 15px; /* Space between Image, Text, and Button */
+    }
+
+    /* 4. IMAGE: Fixed Square on the Left */
+    .game-img {
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        object-fit: cover;
+        margin: 0; /* Remove old margins */
+        flex-shrink: 0; /* Stop image from getting squished */
+    }
+
+    /* 5. TEXT: The Middle Section */
+    .match-info {
+        flex-grow: 1; /* Take up all available space */
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .match-info h3 {
+        font-size: 15px;
+        margin: 0 0 4px 0;
+        white-space: nowrap; /* Stop title from wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Add "..." if too long */
+        max-width: 140px;
+    }
+
+    .meta-row {
+        display: flex;
+        gap: 10px;
+        font-size: 11px;
+        color: #ddd;
+    }
+    
+    .meta-row p { margin: 0; }
+
+    /* 6. BUTTON: The Right Section */
+    .match-action {
+        flex-shrink: 0; /* Stop button from shrinking */
+    }
+
+    .small-btn {
+        padding: 8px 12px;
+        font-size: 11px;
+        width: auto;
+        margin: 0;
+    }
+}

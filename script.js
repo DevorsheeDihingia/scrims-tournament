@@ -39,38 +39,45 @@ function renderMatches(data) {
     }
 
     data.forEach(match => {
-        // 1. Check the "Backpack" (Local Storage) to see if we already joined
+        // 1. Check the "Backpack" (Local Storage)
         const isJoined = localStorage.getItem("joined-" + match.id);
 
         let buttonText = "Register";
         let buttonStyle = ""; 
 
-        // 2. If we found it in the backpack, change the look immediately
+        // 2. Button Logic
         if (isJoined === "yes") {
             buttonText = "Joined";
             buttonStyle = "background-color: #2ed573; cursor: default;"; 
         }
 
+        // 3. THE FIX: We use a "Flex Wrapper" structure
+        // Left = Image, Middle = Details, Right = Button
         const cardHTML = `
             <div class="match-card">
                 <img src="${match.image}" class="game-img">
                 
-                <h3>${match.game}</h3>
-                <p>Time: ${match.time}</p>
-                <p>Prize: ${match.prize}</p>
-                
-                <p style="color: #bbb; font-size: 14px; margin-bottom: 10px;">
-                    👥 <span id="count-${match.id}">Loading...</span> Registered
-                </p>
+                <div class="match-info">
+                    <h3>${match.game}</h3>
+                    <div class="meta-row">
+                        <p>🕒 ${match.time}</p>
+                        <p>🏆 ${match.prize}</p>
+                    </div>
+                    <p style="color: #bbb; font-size: 12px; margin-top: 5px;">
+                        👥 <span id="count-${match.id}">Loading...</span>
+                    </p>
+                </div>
 
-                <button 
-                    id="btn-${match.id}" 
-                    class="small-btn" 
-                    style="background-color: #555; cursor: wait;" 
-                    disabled 
-                    onclick="register(this, ${match.id})">
-                    Checking...
-                </button>
+                <div class="match-action">
+                    <button 
+                        id="btn-${match.id}" 
+                        class="small-btn" 
+                        style="${buttonStyle}" 
+                        disabled 
+                        onclick="register(this, ${match.id})">
+                        ${buttonText}
+                    </button>
+                </div>
             </div>
         `;
         container.innerHTML += cardHTML;
@@ -202,4 +209,5 @@ window.addEventListener("scroll", function() {
     
     // 3. Update the "last" position for the next check
     lastScrollTop = scrollTop;
-});
+});80.
+
